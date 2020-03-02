@@ -25,11 +25,14 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="remove-phone-button" class="btn btn-default">
+                              <i class="fas fa-minus"></i>
+                           </button>
+                           <input id="iPhone" type="text" class="form-control text-center" value="1"></button>
+                           <button id="add-phone-button" class="btn btn-default">
+                              <i class="fas fa-plus"></i>
                         </div>
-                        <h5>$1219</h5>
+                        <h5>$<span id="iphone-cart">1219</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -43,12 +46,16 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="remove-case-button" class="btn btn-default">
+                              <i class="fas fa-minus"></i>
+                           </button>
+                           <input id="iPhone-silicone" type="text" class="form-control text-center" value="1">
+                           <button id="add-case-button" class="btn btn-default">
+                              <i class="fas fa-plus"></i>
+                           </button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="iPhone-silicone-cart">59</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,9 +71,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="sub-total">00</span></h5>
                         <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="total-amount">00</span></h5>
                      </div>
                   </div>
                </div>
@@ -78,5 +85,79 @@
       </div>
    </section>
 </body>
+<script>
+   //iPhone add Button Event handler
+   const phonePlusButtonCheck = document.getElementById("add-phone-button");
+   phonePlusButtonCheck.addEventListener("click", function(){
+      updatePhoneText("iPhone",1);
+      const phoneCart = updatePhoneChart("iphone-cart", 1219);
+
+      const caseCart = document.getElementById("iPhone-silicone-cart").innerText;
+      const caseCartNumber = parseFloat(caseCart);
+      document.getElementById("sub-total").innerText = updatePhoneCase(phoneCart,caseCartNumber);
+
+      amountCheck("total-amount", "sub-total");
+   })
+   //iPhone-silicone add Button Event handler
+   const casePlusButtonCheck = document.getElementById("add-case-button");
+   casePlusButtonCheck.addEventListener("click", function(){
+      updatePhoneText("iPhone-silicone",1);
+      const caseCart = updatePhoneChart("iPhone-silicone-cart", 59);
+      
+      const phoneCart = document.getElementById("iphone-cart").innerText;
+      const phoneCartNumber = parseFloat(phoneCart);
+      document.getElementById("sub-total").innerText =  updatePhoneCase(caseCart,phoneCartNumber);
+
+      amountCheck("total-amount", "sub-total");
+
+   })
+   //iPhone remove Button Event handler
+   const phoneMinusButtonCheck = document.getElementById("remove-phone-button");
+   phoneMinusButtonCheck.addEventListener("click", function(){
+      updatePhoneText("iPhone",-1);
+      const phoneCart =updatePhoneChart("iphone-cart", -1219);
+
+      const caseCart = document.getElementById("iPhone-silicone-cart").innerText;
+      const caseCartNumber = parseFloat(caseCart);
+      document.getElementById("sub-total").innerText =  updatePhoneCase(phoneCart,caseCartNumber);
+
+      amountCheck("total-amount", "sub-total");
+   })
+   //iPhone-silicone remove Button Event handler
+   const caseMinusButtonCheck = document.getElementById("remove-case-button");
+   caseMinusButtonCheck.addEventListener("click", function(){
+      updatePhoneText("iPhone-silicone",-1);
+      const caseCart = updatePhoneChart("iPhone-silicone-cart", -59);
+
+      const phoneCart = document.getElementById("iphone-cart").innerText;
+      const phoneCartNumber = parseFloat(phoneCart);
+      document.getElementById("sub-total").innerText =  updatePhoneCase(caseCart,phoneCartNumber);
+
+      amountCheck("total-amount", "sub-total");
+   })
+   function updatePhoneText(id, numberGiven){
+      const getNumber = document.getElementById(id).value;
+      const getNumberDigit = parseFloat(getNumber);
+      const totalAmount = getNumberDigit + numberGiven;
+      document.getElementById(id).value = totalAmount;
+      return totalAmount;
+   }
+   function updatePhoneChart(id, numberGiven){
+      const getNumber = document.getElementById(id).innerText;
+      const getNumberDigit = parseFloat(getNumber);
+      const totalAmount = getNumberDigit + numberGiven;
+      document.getElementById(id).innerText = totalAmount;
+      return totalAmount;
+   }
+   function  updatePhoneCase(firstNumber, secondNumber){
+      const totalAmount = firstNumber + secondNumber;
+      return totalAmount;
+
+   }
+   function amountCheck(firstId, secondId){
+       document.getElementById(firstId).innerText = document.getElementById(secondId).innerText;
+      
+   }
+</script>
 
 </html>
